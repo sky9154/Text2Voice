@@ -2,7 +2,7 @@ import React from 'react';
 import CardContent from '@mui/material/CardContent';
 import TextField from '@mui/material/TextField';
 
-type Text2Voice = {
+type TextInputProps = {
   typeNumber: number,
   voice: {
     voice?: SpeechSynthesisVoice,
@@ -12,7 +12,7 @@ type Text2Voice = {
   }
 }
 
-const TextInput: React.FC<Text2Voice> = ({ typeNumber, voice }) => {
+const TextInput: React.FC<TextInputProps> = ({ typeNumber, voice }) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     voice.text = event.target.value;
   };

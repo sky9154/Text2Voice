@@ -1,13 +1,9 @@
 import React, { useState } from 'react';
 import Container from '@mui/material/Container';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import Box from '@mui/material/Box';
 import VoiceAlert from './VoiceAlert';
 import TextInput from './TextInput';
-import PlayBtn from './PlayBtn';
-import TypeDownBtn from './TypeDownBtn';
-import TypeUpBtn from './TypeUpBtn';
+import Settings from './Settings';
 import '../css/style.css';
 
 let voices: SpeechSynthesisVoice[];
@@ -39,7 +35,7 @@ const App: React.FC = () => {
   const [voiceName, setVoiceName] = useState('Microsoft Nanami Online (Natural)');
 
   const typeDown = () => {
-    const number = typeNumber - 1 < 0 ? 15 : typeNumber - 1;
+    const number: number = typeNumber - 1 < 0 ? 15 : typeNumber - 1;
 
     voiceObj.type = number;
     voiceObj.voice = voices[number];
@@ -49,13 +45,21 @@ const App: React.FC = () => {
   }
 
   const typeUp = () => {
-    const number = typeNumber + 1 > 15 ? 0 : typeNumber + 1;
+    const number: number = typeNumber + 1 > 15 ? 0 : typeNumber + 1;
 
     voiceObj.type = number;
     voiceObj.voice = voices[number];
 
     setTypeNumber(number);
     setVoiceName(voiceObj.voice.name.split(' - ')[0]);
+  }
+
+  const typeUpDown: {
+    up: () => void,
+    down: () => void
+  } = {
+    "up": typeUp,
+    "down": typeDown
   }
 
   return (
@@ -66,15 +70,7 @@ const App: React.FC = () => {
 
         <TextInput typeNumber={typeNumber} voice={voiceObj} />
 
-        <CardActions sx={{ flexDirection: "column" }} className="center" >
-          <Box>
-
-            <TypeDownBtn onClickHandler={typeDown} />
-            <PlayBtn voiceObj={voiceObj} voices={voices} />
-            <TypeUpBtn onClickHandler={typeUp} />
-
-          </Box>
-        </CardActions>
+        <Settings voiceObj={voiceObj} voices={voices} typeUpDown={typeUpDown} />
 
       </Card>
     </Container>
