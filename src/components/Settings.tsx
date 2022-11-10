@@ -88,7 +88,7 @@ const TypeBtn: React.FC<Text2Voice> = ({ typeBtn, voiceObj, voices, voiceState }
 }
 
 const Settings: React.FC<Text2Voice> = ({ voiceObj, voices, voiceState }) => (
-  <CardActions sx={{ flexDirection: "column" }} className="center" >
+  <CardActions sx={{ flexDirection: "column" }} className="center">
     <Box>
       <TypeBtn typeBtn={'down'} voiceObj={voiceObj} voices={voices} voiceState={voiceState} />
       <PlayBtn voiceObj={voiceObj} voices={voices} />
