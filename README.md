@@ -11,8 +11,9 @@
 * 調整發音的速度。
 
 ## 已知問題
-* 僅支持 PC 版 Microsoft Edge 瀏覽器，其於瀏覽器出現無法載入語音包的問題。
+...
 
 ## 參考資料
 * [SpeechSynthesisUtterance](https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesisUtterance)
 * [SpeechSynthesis](https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis)
+* [Getting the list of voices in speechSynthesis (Web Speech API)](https://stackoverflow.com/questions/21513706/getting-the-list-of-voices-in-speechsynthesis-web-speech-api)
