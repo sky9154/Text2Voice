@@ -13,16 +13,13 @@ type TextInputProps = {
 }
 
 const TextInput: React.FC<TextInputProps> = ({ typeNumber, voice }) => {
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    voice.text = event.target.value;
-  };
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => voice.text = event.target.value;
 
   return (
     <>
       <CardContent className="center input">
         <TextField disabled id="input-type" label="Choose the voice type" variant="outlined" value={typeNumber} />
       </CardContent>
-
       <CardContent className="center input">
         <TextField id="input-text" label="Enter the text to convert" variant="outlined" onChange={handleChange} />
       </CardContent>

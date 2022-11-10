@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import CardActions from '@mui/material/CardActions';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
@@ -6,50 +6,40 @@ import SkipNextIcon from '@mui/icons-material/SkipNext';
 import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 
-type PlayBtnProps = {
+type Text2Voice = {
+  typeBtn?: string,
   voices: SpeechSynthesisVoice[],
   voiceObj: {
     voice?: SpeechSynthesisVoice,
     text: string,
     type: number,
     volume: number
+  },
+  voiceState?: {
+    number: number,
+    setNumber: Dispatch<SetStateAction<number>>,
+    setName: Dispatch<SetStateAction<string>>
   }
 }
 
-type TypeBtnProps = {
-  onClickHandler: () => void
-}
-
-type Text2Voice = PlayBtnProps & {
-  typeUpDown: {
-    up: () => void,
-    down: () => void
-  }
-};
-
-const PlayBtn: React.FC<PlayBtnProps> = ({ voiceObj, voices }) => {
+const PlayBtn: React.FC<Text2Voice> = ({ voiceObj, voices }) => {
   const text2voice = () => {
     let sayer: SpeechSynthesisUtterance = new SpeechSynthesisUtterance();
-    let voiceTextState: boolean = true;
+    let { voice, text, type, volume } = voiceObj;
 
-    if (voiceObj.text === '') {
-      voiceObj.text = voiceObj.type > 1 ? '你他媽倒是輸入呀' : '入力あ バカ';
-      voiceTextState = false;
+    voice = voices[type];
+
+    if (text === '') {
+      text = type > 1 ? '你他媽倒是輸入呀' : '入力あ バカ';
     }
 
-    voiceObj.voice = voices[voiceObj.type];
+    speechSynthesis.cancel()
 
-    speechSynthesis.cancel();
-
-    sayer.text = voiceObj.text;
-    sayer.voice = voiceObj.voice;
-    sayer.volume = voiceObj.volume;
+    sayer.text = text;
+    sayer.voice = voice;
+    sayer.volume = volume;
 
     speechSynthesis.speak(sayer);
-
-    if (!voiceTextState) {
-      voiceObj.text = '';
-    }
   }
 
   return (
@@ -59,26 +49,50 @@ const PlayBtn: React.FC<PlayBtnProps> = ({ voiceObj, voices }) => {
   );
 }
 
-const TypeUpBtn: React.FC<TypeBtnProps> = ({ onClickHandler }) => (
-  <IconButton aria-label="next" onClick={onClickHandler}>
-    <SkipNextIcon />
-  </IconButton>
-);
+const TypeBtn: React.FC<Text2Voice> = ({ typeBtn, voiceObj, voices, voiceState }) => {
+  let { number, setNumber, setName } = voiceState;
+  
+  const typeFunc = () => {
+    switch (typeBtn) {
+      case 'up':
+        number = number + 1 > 15 ? 0 : number + 1;
+        
+        break;
+      case 'down':
+        number = number - 1 < 0 ? 15 : number - 1;
 
-const TypeDownBtn: React.FC<TypeBtnProps> = ({ onClickHandler }) => (
-  <IconButton aria-label="previous" onClick={onClickHandler}>
-    <SkipPreviousIcon />
-  </IconButton>
-);
+        break;
+    }
+    
+    voiceObj.type = number;
+    voiceObj.voice = voices[number];
 
-const Settings: React.FC<Text2Voice> = ({ voiceObj, voices, typeUpDown }) => (
+    setNumber(number);
+    setName(voiceObj.voice.name.split(' - ')[0]);
+  }
+
+  switch (typeBtn) {
+    case 'up':
+      return (
+        <IconButton aria-label="typeUp" onClick={typeFunc}>
+          <SkipNextIcon />
+        </IconButton>
+      );
+    case 'down':
+      return (
+        <IconButton aria-label="typeDown" onClick={typeFunc}>
+          <SkipPreviousIcon />
+        </IconButton>
+      );
+  }
+}
+
+const Settings: React.FC<Text2Voice> = ({ voiceObj, voices, voiceState }) => (
   <CardActions sx={{ flexDirection: "column" }} className="center" >
     <Box>
-
-      <TypeDownBtn onClickHandler={typeUpDown.down} />
+      <TypeBtn typeBtn={'down'} voiceObj={voiceObj} voices={voices} voiceState={voiceState} />
       <PlayBtn voiceObj={voiceObj} voices={voices} />
-      <TypeUpBtn onClickHandler={typeUpDown.up} />
-
+      <TypeBtn typeBtn={'up'} voiceObj={voiceObj} voices={voices} voiceState={voiceState} />
     </Box>
   </CardActions>
 );

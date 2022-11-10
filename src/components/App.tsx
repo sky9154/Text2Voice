@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import Container from '@mui/material/Container';
 import Card from '@mui/material/Card';
 import VoiceAlert from './VoiceAlert';
 import TextInput from './TextInput';
 import Settings from './Settings';
+import InfoSnackbar from './InfoSnackbar';
 import '../css/style.css';
 
 let voices: SpeechSynthesisVoice[];
@@ -13,7 +14,7 @@ let voiceObj: {
   type: number,
   volume: number
 } = {
-  text: "",
+  text: '',
   type: 0,
   volume: 0.5
 };
@@ -25,54 +26,35 @@ const voicesFilter = (voices: SpeechSynthesisVoice[]) => voices
 if (speechSynthesis.onvoiceschanged == undefined) {
   speechSynthesis.onvoiceschanged = () => {
     voices = voicesFilter(speechSynthesis.getVoices());
+    voiceObj.voice = voices[0];
   }
 } else {
   voices = voicesFilter(speechSynthesis.getVoices());
+  voiceObj.voice = voices[0];
 }
 
 const App: React.FC = () => {
   const [typeNumber, setTypeNumber] = useState(0);
   const [voiceName, setVoiceName] = useState('Microsoft Nanami Online (Natural)');
 
-  const typeDown = () => {
-    const number: number = typeNumber - 1 < 0 ? 15 : typeNumber - 1;
-
-    voiceObj.type = number;
-    voiceObj.voice = voices[number];
-
-    setTypeNumber(number);
-    setVoiceName(voiceObj.voice.name.split(' - ')[0]);
-  }
-
-  const typeUp = () => {
-    const number: number = typeNumber + 1 > 15 ? 0 : typeNumber + 1;
-
-    voiceObj.type = number;
-    voiceObj.voice = voices[number];
-
-    setTypeNumber(number);
-    setVoiceName(voiceObj.voice.name.split(' - ')[0]);
-  }
-
-  const typeUpDown: {
-    up: () => void,
-    down: () => void
+  const voiceState: {
+    number: number,
+    setNumber: Dispatch<SetStateAction<number>>,
+    setName: Dispatch<SetStateAction<string>>
   } = {
-    "up": typeUp,
-    "down": typeDown
+    number: typeNumber,
+    setNumber: setTypeNumber,
+    setName: setVoiceName
   }
 
   return (
     <Container sx={{ minWidth: 355 }}>
       <Card>
-
         <VoiceAlert voiceName={voiceName} />
-
         <TextInput typeNumber={typeNumber} voice={voiceObj} />
-
-        <Settings voiceObj={voiceObj} voices={voices} typeUpDown={typeUpDown} />
-
+        <Settings voiceObj={voiceObj} voices={voices} voiceState={voiceState} />
       </Card>
+      <InfoSnackbar />
     </Container>
   );
 }
