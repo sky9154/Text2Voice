@@ -43,7 +43,7 @@ const PlayBtn: React.FC<Text2Voice> = ({ voiceObj, voices }) => {
   }
 
   return (
-    <IconButton aria-label="play" onClick={text2voice}>
+    <IconButton aria-label="play" sx={{cursor: "pointer"}} onClick={text2voice}>
       <PlayArrowIcon sx={{ height: 38, width: 38 }} />
     </IconButton>
   );
@@ -74,13 +74,13 @@ const TypeBtn: React.FC<Text2Voice> = ({ typeBtn, voiceObj, voices, voiceState }
   switch (typeBtn) {
     case 'up':
       return (
-        <IconButton aria-label="typeUp" onClick={typeFunc}>
+        <IconButton aria-label="typeUp" sx={{cursor: "pointer"}} onClick={typeFunc}>
           <SkipNextIcon />
         </IconButton>
       );
     case 'down':
       return (
-        <IconButton aria-label="typeDown" onClick={typeFunc}>
+        <IconButton aria-label="typeDown" sx={{cursor: "pointer"}} onClick={typeFunc}>
           <SkipPreviousIcon />
         </IconButton>
       );
