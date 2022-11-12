@@ -2,28 +2,24 @@ import React from 'react';
 import CardContent from '@mui/material/CardContent';
 import TextField from '@mui/material/TextField';
 
-type TextInputProps = {
-  typeNumber: number,
-  voice: {
-    voice?: SpeechSynthesisVoice,
+type Text2Voice = {
+  voiceObj: {
     text: string,
+    lang: string,
     type: number,
     volume: number
   }
 }
 
-const TextInput: React.FC<TextInputProps> = ({ typeNumber, voice }) => {
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => voice.text = event.target.value;
+const TextInput: React.FC<Text2Voice> = ({ voiceObj }) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    voiceObj.text = event.target.value;
+  }
 
   return (
-    <>
-      <CardContent className="center input">
-        <TextField disabled id="input-type" label="Choose the voice type" variant="outlined" value={typeNumber} />
-      </CardContent>
-      <CardContent className="center input">
-        <TextField id="input-text" label="Enter the text to convert" variant="outlined" onChange={handleChange} />
-      </CardContent>
-    </>
+    <CardContent className="center">
+      <TextField label="Enter the text to convert" sx={{ minWidth: 320 }} variant="outlined" onChange={handleChange} />
+    </CardContent>
   );
 }
 

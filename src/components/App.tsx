@@ -1,27 +1,29 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import Container from '@mui/material/Container';
 import Card from '@mui/material/Card';
-import VoiceAlert from './VoiceAlert';
+import VoiceSelect from './VoiceSelect';
 import TextInput from './TextInput';
-import Settings from './Settings';
+import PlayVoice from './PlayVoice';
 import '../css/style.css';
 
 let voiceObj: {
   text: string,
+  lang: string,
   type: number,
   volume: number
 } = {
   text: '',
-  type: 1,
+  lang: '',
+  type: 0,
   volume: 1
 };
 
 export const voicesObtain = new Promise((resolve: (voices: SpeechSynthesisVoice[]) => void) => {
   const voicesFilter = (voices: SpeechSynthesisVoice[]) => voices
-    .filter(i => i.lang.includes('ja') || i.lang.includes('zh-TW') || i.lang.includes('zh-CN'))
+    .filter((item) => ['en-US', 'ja-JP', 'ko-KR'].includes(item.lang) || item.lang.includes('zh'))
     .sort((a, b) => a.lang > b.lang ? 1 : -1);
 
-  let voices = window.speechSynthesis.getVoices();
+  let voices: SpeechSynthesisVoice[] = window.speechSynthesis.getVoices();
 
   if (voices.length !== 0) {
     resolve(voicesFilter(voices));
@@ -34,33 +36,14 @@ export const voicesObtain = new Promise((resolve: (voices: SpeechSynthesisVoice[
   }
 });
 
-const App: React.FC = () => {
-  const [typeNumber, setTypeNumber] = useState(1);
-  const [voiceName, setVoiceName] = useState('');
-
-  const voiceState: {
-    number: number,
-    setNumber: Dispatch<SetStateAction<number>>,
-    setName: Dispatch<SetStateAction<string>>
-  } = {
-    number: typeNumber,
-    setNumber: setTypeNumber,
-    setName: setVoiceName
-  }
-
-  if (voiceName === '') {
-    voicesObtain.then((voices) => setVoiceName(voices[0].name.split(' - ')[0]));
-  }
-
-  return (
-    <Container sx={{ minWidth: 355 }}>
-      <Card>
-        <VoiceAlert voiceName={voiceName} />
-        <TextInput typeNumber={typeNumber} voice={voiceObj} />
-        <Settings voiceObj={voiceObj} voiceState={voiceState} />
-      </Card>
-    </Container>
-  );
-}
+const App: React.FC = () => (
+  <Container sx={{ minWidth: 355 }}>
+    <Card>
+      <VoiceSelect voiceObj={voiceObj} />
+      <TextInput voiceObj={voiceObj} />
+      <PlayVoice voiceObj={voiceObj} />
+    </Card>
+  </Container>
+);
 
 export default App;
