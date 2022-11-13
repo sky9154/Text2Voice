@@ -38,24 +38,27 @@ const VoiceSelect: React.FC<Text2Voice> = ({ voiceObj }) => {
 
   const langHandleChange = (event: SelectChangeEvent) => {
     const lang: string = event.target.value;
-    const defaultVoiceSelect: JSX.Element[] = [<MenuItem key="" value="">None</MenuItem>];
+    const defaultVoiceSelect: JSX.Element[] = [];
 
-    setLang(lang);
+    if (lang === '') {
+      defaultVoiceSelect.push(<MenuItem key="" value="">None</MenuItem>);
+    } else {
+      voicesObtain.then((voices) => {
+        const voiceMap = voices
+          .filter((item) => item.lang.includes(lang))
+          .sort((a, b) => a.lang > b.lang ? 1 : -1);
+
+        voiceMap.map((voice, index) => defaultVoiceSelect.push(
+          <MenuItem key={index} value={index}>{voice.name.split(' - ')[0]}</MenuItem>
+        ));
+      });
+    }
 
     voiceObj.lang = lang;
 
-    voicesObtain.then((voices) => {
-      const voiceMap = voices
-        .filter((item) => item.lang.includes(lang))
-        .sort((a, b) => a.lang > b.lang ? 1 : -1);
-
-      voiceMap.map((voice, index) => defaultVoiceSelect.push(
-        <MenuItem key={index} value={index}>{voice.name.split(' - ')[0]}</MenuItem>
-      ));
-
-      setVoiceSelect(defaultVoiceSelect);
-      setVoice(lang === '' ? '' : '0');
-    });
+    setLang(lang);
+    setVoiceSelect(defaultVoiceSelect);
+    setVoice(lang === '' ? '' : '0');
   };
 
   const voiceHandleChange = (event: SelectChangeEvent) => {
@@ -71,7 +74,7 @@ const VoiceSelect: React.FC<Text2Voice> = ({ voiceObj }) => {
       <CardContent className="center">
         <FormControl sx={{ minWidth: 320 }}>
           <InputLabel id="lang">Select the language of voice</InputLabel>
-          <Select label="Select the language of voice" value={lang} defaultValue="" onChange={langHandleChange}>
+          <Select label="Select the language of voice" value={lang} onChange={langHandleChange}>
             {langSelect}
           </Select>
         </FormControl>
@@ -79,7 +82,7 @@ const VoiceSelect: React.FC<Text2Voice> = ({ voiceObj }) => {
       <CardContent className="center">
         <FormControl sx={{ minWidth: 320 }}>
           <InputLabel id="voice">Select the type of voice</InputLabel>
-          <Select label="Select the type of voice" value={voice} defaultValue="" onChange={voiceHandleChange}>
+          <Select label="Select the type of voice" value={voice} onChange={voiceHandleChange}>
             {voiceSelect}
           </Select>
         </FormControl>

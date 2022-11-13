@@ -1,10 +1,13 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React from 'react';
+import CssBaseline from '@mui/material/CssBaseline';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import Card from '@mui/material/Card';
 import VoiceSelect from './VoiceSelect';
 import TextInput from './TextInput';
-import PlayVoice from './PlayVoice';
+import BtnGroup from './BtnGroup';
 import '../css/style.css';
+import { PaletteMode } from '@mui/material';
 
 let voiceObj: {
   text: string,
@@ -20,7 +23,7 @@ let voiceObj: {
 
 export const voicesObtain = new Promise((resolve: (voices: SpeechSynthesisVoice[]) => void) => {
   const voicesFilter = (voices: SpeechSynthesisVoice[]) => voices
-    .filter((item) => ['en-US', 'ja-JP', 'ko-KR'].includes(item.lang) || item.lang.includes('zh'))
+    .filter((item) => ['en-US', 'ja-JP', 'ko-KR', 'zh-TW', 'zh-CN', 'zh-HK'].includes(item.lang))
     .sort((a, b) => a.lang > b.lang ? 1 : -1);
 
   let voices: SpeechSynthesisVoice[] = window.speechSynthesis.getVoices();
@@ -36,14 +39,25 @@ export const voicesObtain = new Promise((resolve: (voices: SpeechSynthesisVoice[
   }
 });
 
-const App: React.FC = () => (
-  <Container sx={{ minWidth: 355 }}>
-    <Card>
-      <VoiceSelect voiceObj={voiceObj} />
-      <TextInput voiceObj={voiceObj} />
-      <PlayVoice voiceObj={voiceObj} />
-    </Card>
-  </Container>
-);
+const App: React.FC = () => {
+  const [theme, setTheme] = React.useState<'light' | 'dark'>('light');
+  
+  const darkTheme = createTheme({ palette: { mode: theme as PaletteMode } });
+
+  return (
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
+      <Container sx={{ minWidth: 355 }}>
+        <Card sx={{ m: 1 }}>
+          <VoiceSelect voiceObj={voiceObj} />
+          <TextInput voiceObj={voiceObj} />
+          <BtnGroup theme={theme} setTheme={setTheme} voiceObj={voiceObj} />
+        </Card>
+        <Card sx={{ m: 1 }}>
+        </Card>
+      </Container>
+    </ThemeProvider>
+  );
+}
 
 export default App;
