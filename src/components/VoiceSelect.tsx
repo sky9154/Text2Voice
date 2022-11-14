@@ -1,21 +1,9 @@
 import React from 'react';
-import CardContent from '@mui/material/CardContent';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { voicesObtain } from './App';
-
-type Text2Voice = {
-  voiceObj: {
-    text: string,
-    lang: string,
-    type: number,
-    volume: number
-  }
-}
-
-
+import { Text2Voice, voicesObtain } from './App';
 
 const VoiceSelect: React.FC<Text2Voice> = ({ voiceObj }) => {
   const [langSelect, setLangSelect] = React.useState([<MenuItem key="" value="">None</MenuItem>]);
@@ -71,22 +59,18 @@ const VoiceSelect: React.FC<Text2Voice> = ({ voiceObj }) => {
 
   return (
     <>
-      <CardContent className="center">
-        <FormControl sx={{ minWidth: 320 }}>
-          <InputLabel id="lang">Select the language of voice</InputLabel>
-          <Select label="Select the language of voice" value={lang} onChange={langHandleChange}>
-            {langSelect}
-          </Select>
-        </FormControl>
-      </CardContent>
-      <CardContent className="center">
-        <FormControl sx={{ minWidth: 320 }}>
-          <InputLabel id="voice">Select the type of voice</InputLabel>
-          <Select label="Select the type of voice" value={voice} onChange={voiceHandleChange}>
-            {voiceSelect}
-          </Select>
-        </FormControl>
-      </CardContent>
+      <FormControl sx={{ minWidth: 330 }}>
+        <InputLabel id="lang">Select the language of voice</InputLabel>
+        <Select label="Select the language of voice" value={lang} onChange={langHandleChange}>
+          {langSelect}
+        </Select>
+      </FormControl>
+      <FormControl sx={{ minWidth: 330 }}>
+        <InputLabel id="voice">Select the type of voice</InputLabel>
+        <Select label="Select the type of voice" value={voice} onChange={voiceHandleChange}>
+          {voiceSelect}
+        </Select>
+      </FormControl>
     </>
   );
 }

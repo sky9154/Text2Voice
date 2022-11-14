@@ -1,13 +1,25 @@
 import React from 'react';
-import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { PaletteMode } from '@mui/material';
+import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
 import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Stack from '@mui/material/Stack';
 import VoiceSelect from './VoiceSelect';
 import TextInput from './TextInput';
 import BtnGroup from './BtnGroup';
+import Setting from './Setting';
 import '../css/style.css';
-import { PaletteMode } from '@mui/material';
+
+export type Text2Voice = {
+  voiceObj: {
+    text: string,
+    lang: string,
+    type: number,
+    volume: number
+  }
+}
 
 let voiceObj: {
   text: string,
@@ -40,20 +52,46 @@ export const voicesObtain = new Promise((resolve: (voices: SpeechSynthesisVoice[
 });
 
 const App: React.FC = () => {
-  const [theme, setTheme] = React.useState<'light' | 'dark'>('light');
-  
-  const darkTheme = createTheme({ palette: { mode: theme as PaletteMode } });
+  const [themeMode, setThemeMode] = React.useState<'light' | 'dark'>('light');
+
+  const theme = createTheme({
+    palette: {
+      mode: themeMode as PaletteMode,
+      ...(themeMode === 'dark' ? {
+        background: { default: '#0A1828', paper: '#0E203F' }
+      } : {
+        background: { default: '#BBDEFD' }
+      })
+    },
+    typography: { fontFamily: `"Noto Sans JP", "Noto Sans TC", "Roboto", sans-serif` },
+    components: {
+      MuiCard: {
+        styleOverrides: {
+          ...(themeMode === 'dark' && { root: { border: '1px solid #2161DD' } })
+        }
+      }
+    }
+  });
 
   return (
-    <ThemeProvider theme={darkTheme}>
+    <ThemeProvider theme={theme}>
       <CssBaseline />
       <Container sx={{ minWidth: 355 }}>
         <Card sx={{ m: 1 }}>
-          <VoiceSelect voiceObj={voiceObj} />
-          <TextInput voiceObj={voiceObj} />
-          <BtnGroup theme={theme} setTheme={setTheme} voiceObj={voiceObj} />
+          <CardContent sx={{ '&:last-child': { p: 2 }}}>
+            <Stack direction="column" justifyContent="center" alignItems="stretch" spacing={3}>
+              <VoiceSelect voiceObj={voiceObj} />
+              <TextInput voiceObj={voiceObj} />
+              <Stack direction="row" justifyContent="center" alignItems="center" spacing={2}>
+                <BtnGroup themeMode={themeMode} setThemeMode={setThemeMode} voiceObj={voiceObj} />
+              </Stack>
+            </Stack>
+          </CardContent>
         </Card>
         <Card sx={{ m: 1 }}>
+          <CardContent sx={{ '&:last-child': { p: 2 }}}>
+            <Setting voiceObj={voiceObj} />
+          </CardContent>
         </Card>
       </Container>
     </ThemeProvider>

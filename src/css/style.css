@@ -1,38 +1,17 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Noto+Sans+TC:wght@400;700&family=Roboto:wght@400;700&display=swap");
 
-html {
-  overflow: -moz-hidden-unscrollable;
-  height: 100%;
-}
-
-body::-webkit-scrollbar {
-  display: none;
-}
-
-body {
-  -ms-overflow-style: none;
-  height: 100%;
-  width: 100vw;
-  overflow:hidden;
-}
-
 * {
   margin: 0;
   padding: 0;
-  font-family: "Roboto", "Noto Sans JP", "Noto Sans TC", sans-serif;
 }
 
-html {
-  height: 100vh;
-  width: auto;
+html,
+body {
+  height: 100%;
+  overflow: hidden
 }
 
 body {
-  height: 100%;
-}
-
-body,
-.center {
   display: flex;
   justify-content: center;
   align-items: center;
