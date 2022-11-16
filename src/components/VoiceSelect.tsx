@@ -3,9 +3,9 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { Text2Voice, voicesObtain } from './App';
+import { voiceObj, voicesObtain } from './App';
 
-const VoiceSelect: React.FC<Text2Voice> = ({ voiceObj }) => {
+const VoiceSelect: React.FC = () => {
   const [langSelect, setLangSelect] = React.useState([<MenuItem key="" value="">None</MenuItem>]);
   const [voiceSelect, setVoiceSelect] = React.useState([<MenuItem key="" value="">None</MenuItem>]);
   const [lang, setLang] = React.useState('');

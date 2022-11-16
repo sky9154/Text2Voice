@@ -3,34 +3,22 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { PaletteMode } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Stack from '@mui/material/Stack';
-import VoiceSelect from './VoiceSelect';
-import TextInput from './TextInput';
-import BtnGroup from './BtnGroup';
-import Setting from './Setting';
+import MainCard from './MainCard';
+import MainDialog from './MainDialog';
 import '../css/style.css';
 
-export type Text2Voice = {
-  voiceObj: {
-    text: string,
-    lang: string,
-    type: number,
-    volume: number
-  }
-}
-
-let voiceObj: {
+export let voiceObj: {
   text: string,
   lang: string,
   type: number,
-  volume: number
+  volume: number,
+  rate: number
 } = {
   text: '',
   lang: '',
   type: 0,
-  volume: 1
+  volume: 0.5,
+  rate: 1
 };
 
 export const voicesObtain = new Promise((resolve: (voices: SpeechSynthesisVoice[]) => void) => {
@@ -53,6 +41,7 @@ export const voicesObtain = new Promise((resolve: (voices: SpeechSynthesisVoice[
 
 const App: React.FC = () => {
   const [themeMode, setThemeMode] = React.useState<'light' | 'dark'>('light');
+  const [open, setOpen] = React.useState(false);
 
   const theme = createTheme({
     palette: {
@@ -77,22 +66,8 @@ const App: React.FC = () => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Container sx={{ minWidth: 355 }}>
-        <Card sx={{ m: 1 }}>
-          <CardContent sx={{ '&:last-child': { p: 2 }}}>
-            <Stack direction="column" justifyContent="center" alignItems="stretch" spacing={3}>
-              <VoiceSelect voiceObj={voiceObj} />
-              <TextInput voiceObj={voiceObj} />
-              <Stack direction="row" justifyContent="center" alignItems="center" spacing={2}>
-                <BtnGroup themeMode={themeMode} setThemeMode={setThemeMode} voiceObj={voiceObj} />
-              </Stack>
-            </Stack>
-          </CardContent>
-        </Card>
-        <Card sx={{ m: 1 }}>
-          <CardContent sx={{ '&:last-child': { p: 2 }}}>
-            <Setting voiceObj={voiceObj} />
-          </CardContent>
-        </Card>
+        <MainCard themeMode={themeMode} setThemeMode={setThemeMode} setOpen={setOpen} />
+        <MainDialog open={open} setOpen={setOpen} />
       </Container>
     </ThemeProvider>
   );

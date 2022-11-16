@@ -1,8 +1,8 @@
 import React from 'react';
 import TextField from '@mui/material/TextField';
-import { Text2Voice } from './App';
+import { voiceObj } from './App';
 
-const TextInput: React.FC<Text2Voice> = ({ voiceObj }) => {
+const TextInput: React.FC = () => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     voiceObj.text = event.target.value;
   }

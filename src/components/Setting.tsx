@@ -1,13 +1,30 @@
 import React from 'react';
+import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Slider from '@mui/material/Slider';
 import VolumeDown from '@mui/icons-material/VolumeDown';
 import VolumeUp from '@mui/icons-material/VolumeUp';
-import { Text2Voice } from './App';
+import AccessibleIcon from '@mui/icons-material/Accessible';
+import AccessibleForwardIcon from '@mui/icons-material/AccessibleForward';
+import { voiceObj } from './App';
 
-const Volume: React.FC<Text2Voice> = ({ voiceObj }) => {
-  const getVolume = (volume: number) => {
+type Setting = {
+  volumeObj?: {
+    volume: number,
+    setVolume: (volume: number) => void
+  },
+  rateObj?: {
+    rate: number,
+    setRate: (rate: number) => void
+  }
+}
+const VolumeSlider: React.FC<Setting> = ({ volumeObj }) => {
+  const { volume, setVolume } = volumeObj;
+
+  const handleChange = (event: Event, volume: number) => {
     voiceObj.volume = volume / 100;
+
+    setVolume(volume);
 
     return volume + '';
   }
@@ -15,18 +32,35 @@ const Volume: React.FC<Text2Voice> = ({ voiceObj }) => {
   return (
     <Stack spacing={2} direction="row" sx={{ m: 1 }} alignItems="center">
       <VolumeDown />
-      <Slider defaultValue={50} step={10} min={0} max={100} getAriaValueText={getVolume} />
+      <Slider value={volume} step={10} min={0} max={100} valueLabelDisplay="auto" onChange={handleChange} />
       <VolumeUp />
     </Stack>
   );
 }
 
-const Setting: React.FC<Text2Voice> = ({ voiceObj }) => {
+const PitchSlider: React.FC<Setting> = ({ rateObj }) => {
+  const { rate, setRate } = rateObj;
+
+  const handleChange = (event: Event, rate: number) => {
+    voiceObj.rate = rate / 10;
+
+    setRate(rate);
+  }
+
   return (
-    <>
-      <Volume voiceObj={voiceObj} />
-    </>
+    <Stack spacing={2} direction="row" sx={{ m: 1 }} alignItems="center">
+      <AccessibleIcon />
+      <Slider value={rate} step={5} min={0} max={100} valueLabelDisplay="auto" onChange={handleChange} />
+      <AccessibleForwardIcon />
+    </Stack>
   );
 }
+
+const Setting: React.FC<Setting> = ({ volumeObj, rateObj }) => (
+  <Box m={2}>
+    <VolumeSlider volumeObj={volumeObj} />
+    <PitchSlider rateObj={rateObj} />
+  </Box>
+);
 
 export default Setting;

@@ -1,15 +1,20 @@
 import React from 'react';
+import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
 import TuneIcon from '@mui/icons-material/Tune';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import VolumeMuteIcon from '@mui/icons-material/VolumeMute';
-import { Text2Voice, voicesObtain } from './App';
+import { voiceObj, voicesObtain } from './App';
 
 type ThemeMode = {
   themeMode: string,
   setThemeMode: React.Dispatch<React.SetStateAction<"light" | "dark">>
+}
+
+type Dialog = {
+  setOpen: (state: boolean) => void
 }
 
 const ThemeBtn: React.FC<ThemeMode> = ({ themeMode, setThemeMode }) => {
@@ -27,18 +32,22 @@ const ThemeBtn: React.FC<ThemeMode> = ({ themeMode, setThemeMode }) => {
   );
 }
 
-const SettingBtn: React.FC = () => (
-  <IconButton color="inherit">
-    <TuneIcon />
-  </IconButton>
-);
+const SettingBtn: React.FC<Dialog> = ({ setOpen }) => {
+  const handleClickOpen = () => setOpen(true);
 
-const PlayBtn: React.FC<Text2Voice> = ({ voiceObj }) => {
+  return (
+    <IconButton color="inherit" onClick={handleClickOpen}>
+      <TuneIcon />
+    </IconButton>
+  );
+}
+
+const PlayBtn: React.FC = () => {
   const [playBtn, setPlayBtn] = React.useState(<VolumeMuteIcon sx={{ height: 35, width: 35 }} />);
 
   const playVoice = () => {
     let sayer: SpeechSynthesisUtterance = new SpeechSynthesisUtterance();
-    let { text, lang, type, volume } = voiceObj;
+    let { text, lang, type, volume, rate } = voiceObj;
 
     lang = lang || 'en-US';
     text = text || 'Please enter the text to convert';
@@ -53,9 +62,9 @@ const PlayBtn: React.FC<Text2Voice> = ({ voiceObj }) => {
       sayer.text = text;
       sayer.voice = voiceMap[type];
       sayer.volume = volume;
+      sayer.rate = rate;
 
-      console.log(voiceObj);
-      
+      console.log(sayer);
 
       speechSynthesis.speak(sayer);
     });
@@ -76,12 +85,12 @@ const PlayBtn: React.FC<Text2Voice> = ({ voiceObj }) => {
   );
 }
 
-const BtnGroup: React.FC<ThemeMode & Text2Voice> = ({ themeMode, setThemeMode, voiceObj }) => (
-  <>
-    <SettingBtn />
-    <PlayBtn voiceObj={voiceObj} />
+const BtnGroup: React.FC<ThemeMode & Dialog> = ({ themeMode, setThemeMode, setOpen }) => (
+  <Stack direction="row" justifyContent="center" alignItems="center" spacing={2}>
+    <SettingBtn setOpen={setOpen} />
+    <PlayBtn />
     <ThemeBtn themeMode={themeMode} setThemeMode={setThemeMode} />
-  </>
+  </Stack>
 );
 
 export default BtnGroup;
