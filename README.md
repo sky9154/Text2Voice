@@ -1,15 +1,9 @@
 # Text2Voice
-Using The `SpeechSynthesisVoice` interface of the Web Speech API, Converting text to speech.
+Use the `SpeechSynthesisVoice` interface of the `Web Speech API`, converting text to speech.
 
 Demo: [https://sky9154.com/Text2Voice/](https://sky9154.com/Text2Voice/)
 
-![Main Display](./docs/main.png)
-
-* Main Display
-
-![Setting Dialog](./docs/setting.png)
-
-* Setting Dialog
+![Main Display](./docs/main.jpg)
 
 ## Functions
 * The menu be used to select language and type of the voice.
