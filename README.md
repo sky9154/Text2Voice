@@ -1,7 +1,7 @@
 # Text2Voice
 Using The `SpeechSynthesisVoice` interface of the Web Speech API, Converting text to speech.
 
-Demo: [htttps://sky9154.com/Text2Voice/](htttps://sky9154.com/Text2Voice/)
+Demo: [https://sky9154.com/Text2Voice/](https://sky9154.com/Text2Voice/)
 
 ![Main Display](./docs/main.png)
 
