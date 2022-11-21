@@ -61,13 +61,13 @@ const VoiceSelect: React.FC = () => {
     <>
       <FormControl sx={{ minWidth: 330 }}>
         <InputLabel id="lang">Select the language of voice</InputLabel>
-        <Select label="Select the language of voice" value={lang} onChange={langHandleChange}>
+        <Select label="Select language of the voice" value={lang} onChange={langHandleChange}>
           {langSelect}
         </Select>
       </FormControl>
       <FormControl sx={{ minWidth: 330 }}>
         <InputLabel id="voice">Select the type of voice</InputLabel>
-        <Select label="Select the type of voice" value={voice} onChange={voiceHandleChange}>
+        <Select label="Select type of the voice" value={voice} onChange={voiceHandleChange}>
           {voiceSelect}
         </Select>
       </FormControl>

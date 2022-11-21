@@ -38,7 +38,7 @@ const VolumeSlider: React.FC<Setting> = ({ volumeObj }) => {
   );
 }
 
-const PitchSlider: React.FC<Setting> = ({ rateObj }) => {
+const RateSlider: React.FC<Setting> = ({ rateObj }) => {
   const { rate, setRate } = rateObj;
 
   const handleChange = (event: Event, rate: number) => {
@@ -59,7 +59,7 @@ const PitchSlider: React.FC<Setting> = ({ rateObj }) => {
 const Setting: React.FC<Setting> = ({ volumeObj, rateObj }) => (
   <Box m={2}>
     <VolumeSlider volumeObj={volumeObj} />
-    <PitchSlider rateObj={rateObj} />
+    <RateSlider rateObj={rateObj} />
   </Box>
 );
 
