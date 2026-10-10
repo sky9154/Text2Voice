@@ -1,10 +1,4 @@
-/*!*******************************************************************************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js!./src/css/style.css ***!
-  \*******************************************************************************************************************************************/
 @import url(https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Noto+Sans+TC:wght@400;700&family=Roboto:wght@400;700&display=swap);
-/*!***********************************************************************************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js!./src/css/style.css (1) ***!
-  \***********************************************************************************************************************************************/
 * {
   margin: 0;
   padding: 0;
@@ -21,5 +15,3 @@ body {
   justify-content: center;
   align-items: center;
 }
-
-/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9jc3Mvc3R5bGUuY3NzIiwibWFwcGluZ3MiOiI7Ozs7Ozs7QUFFQTtFQUNFLFNBQVM7RUFDVCxVQUFVO0FBQ1o7O0FBRUE7O0VBRUUsWUFBWTtFQUNaO0FBQ0Y7O0FBRUE7RUFDRSxhQUFhO0VBQ2IsdUJBQXVCO0VBQ3ZCLG1CQUFtQjtBQUNyQixDIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vdGV4dDJ2b2ljZS8uL3NyYy9jc3Mvc3R5bGUuY3NzIl0sInNvdXJjZXNDb250ZW50IjpbIkBpbXBvcnQgdXJsKFwiaHR0cHM6Ly9mb250cy5nb29nbGVhcGlzLmNvbS9jc3MyP2ZhbWlseT1Ob3RvK1NhbnMrSlA6d2dodEA0MDA7NzAwJmZhbWlseT1Ob3RvK1NhbnMrVEM6d2dodEA0MDA7NzAwJmZhbWlseT1Sb2JvdG86d2dodEA0MDA7NzAwJmRpc3BsYXk9c3dhcFwiKTtcclxuXHJcbioge1xyXG4gIG1hcmdpbjogMDtcclxuICBwYWRkaW5nOiAwO1xyXG59XHJcblxyXG5odG1sLFxyXG5ib2R5IHtcclxuICBoZWlnaHQ6IDEwMCU7XHJcbiAgb3ZlcmZsb3c6IGhpZGRlblxyXG59XHJcblxyXG5ib2R5IHtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGp1c3RpZnktY29udGVudDogY2VudGVyO1xyXG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbn0iXSwibmFtZXMiOltdLCJzb3VyY2VSb290IjoiIn0=*/
