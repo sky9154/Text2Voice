@@ -53,31 +53,6 @@ The application calls `window.speechSynthesis.getVoices()` when it starts. If th
 
 Before playback, the app creates a `SpeechSynthesisUtterance`, assigns the entered text, selected voice, volume, and rate, then passes it to `speechSynthesis.speak()`. Any active utterance is cancelled first.
 
-## Repository structure
-
-```text
-Text2Voice/
-├── .gitignore
-├── LICENSE
-├── package.json
-├── postcss.config.js
-├── public/
-│   └── index.html
-├── src/
-│   ├── components/
-│   │   ├── App.tsx              # Voice loading, shared settings, and theme
-│   │   ├── BtnGroup.tsx         # Playback and theme controls
-│   │   ├── Setting.tsx          # Volume and speech-rate controls
-│   │   ├── TextInput.tsx        # Text input
-│   │   └── VoiceSelect.tsx      # Language and voice selection
-│   ├── css/
-│   │   └── style.css
-│   └── index.tsx                # React entry point
-├── tsconfig.json
-├── webpack.config.js
-└── yarn.lock
-```
-
 ## License
 
 The project is distributed under the [MIT License](./LICENSE). Copyright © 2022 oF.
