@@ -1,8 +1,8 @@
 # Text2Voice
 
-Text2Voice is a React and TypeScript browser app that reads typed text aloud through the Web Speech API. It filters the voices provided by the browser and operating system for selected English, Japanese, Korean, and Chinese locales, with controls for voice, volume, speaking rate, and color theme.
-
 ![Text2Voice — browser text to speech](./docs/readme-banner.webp)
+
+Text2Voice is a React and TypeScript browser app that reads typed text aloud through the Web Speech API. It filters the voices provided by the browser and operating system for selected English, Japanese, Korean, and Chinese locales, with controls for voice, volume, speaking rate, and color theme.
 
 ## Features
 
